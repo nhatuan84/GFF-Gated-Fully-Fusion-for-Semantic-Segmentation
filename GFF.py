@@ -103,7 +103,7 @@ def build_gffnet(inputs, label_size, num_classes, preset_model='PSPNet', fronten
     weight_decay=1e-5, upscaling_method="conv", is_training=True, pretrained_dir="models"):
 
     init_fn = None
-    inputs = tf.identity(inputs, name='ymh_in')
+    inputs = tf.identity(inputs, name='in')
 
     net = ConvBlock(inputs, n_filters=64, kernel_size=[3, 3])
     net = ConvBlock(net, n_filters=64, kernel_size=[7, 7], stride=2)
@@ -178,7 +178,7 @@ def build_gffnet(inputs, label_size, num_classes, preset_model='PSPNet', fronten
         net = Upsampling(net, label_size)
     
     net = slim.conv2d(net, num_classes, [1, 1], activation_fn=None, scope='logits')
-    net = tf.identity(net, name='ymh_out')
+    net = tf.identity(net, name='out')
 
     #calculate aux loss
     if upscaling_method.lower() == "conv":
